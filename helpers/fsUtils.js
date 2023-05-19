@@ -1,5 +1,5 @@
 const fs = require('fs');
-const path = require('path');
+const util = require('util');
 
 // This function will write data to a file given a directory and data
 function writeToFile(directory, data) {

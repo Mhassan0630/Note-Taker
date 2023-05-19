@@ -1,31 +1,40 @@
+const express = require("express");
+const fs = require("fs");
 const router = require('express').Router();
-const { v4: uuidv4 } = require('uuid');
-const { readFromFile, readAndAppend } = require('../helpers/fsUtils');
+const db = require("../db/db.json")
 
-// GET Route for retrieving all the notes
-router.get('/notes', (req, res) => {
-  readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
+router.get("/notes", (req, res) => {
+    fs.readFile("./db/db.json", "utf8", (err, data) => {
+        if (err) throw err;
+        const notes = JSON.parse(data);
+        res.json(notes);
+    });
 });
 
-// POST Route for a new UX/UI note
-router.post('/notes', (req, res) => {
-  console.log(req.body);
-
-  const { title, text } = req.body;
-
-  if (req.body) {
+router.post("/notes", (req, res) => {
     const newNote = {
-      title,
-      text,
-      id: uuidv4(),
+        id: Math.floor(Math.random()*10000000),
+        title: req.body.title,
+        text: req.body.text,
     };
-
-    readAndAppend(newNote, './db/db.json');
-    res.json(`Note added successfully 🚀`);
-  } else {
-    res.error('Error in adding note');
-  }
+    const notes = JSON.parse(fs.readFileSync("./db/db.json", "utf8"));
+    notes.push(newNote);
+    fs.writeFileSync("./db/db.json", JSON.stringify(notes));
+    res.json(newNote);
 });
+
+router.delete("/notes/:id", (req, res) => {
+    const notes = JSON.parse(fs.readFileSync("./db/db.json", "utf8"));
+    const noteId = req.params.id;
+    console.log(notes);
+    console.log(noteId);
+    const updatedNotes = notes.filter((note) => note.id != noteId);
+    fs.writeFileSync("./db/db.json", JSON.stringify(updatedNotes));
+    res.json(updatedNotes);
+})
+
+module.exports = router;
+
 
 module.exports = router;
 
