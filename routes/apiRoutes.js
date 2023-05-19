@@ -1,6 +1,6 @@
 const router = require("express").Router();
-const fsUtils = require('../../helpers/fsUtils');
-const uuid = require('../../helpers/uuid');
+const fsUtils = require('../helpers/fsUtils');
+const uuid = require('../helpers/uuid');
 
 // GET "/api/notes"
 router.get("/notes", (req, res) => {
