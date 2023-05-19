@@ -1,9 +1,10 @@
 const path = require('path');
-
 const express = require('express');
-const app = express();
+const router = express.Router();
 const notesRouter = require('./notes');
-app.use('/notes', express.static(path.join(__dirname, 'public')));
 
+router.use('/notes', notesRouter);
+router.use('/', express.static(path.join(__dirname, '../public')));
 
-module.exports = app;
+module.exports = router;
+
