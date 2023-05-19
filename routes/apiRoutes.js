@@ -1,5 +1,6 @@
 const router = require("express").Router();
-const store = require("../db/store");
+const fsUtils = require('../../helpers/fsUtils');
+const uuid = require('../../helpers/uuid');
 
 // GET "/api/notes"
 router.get("/notes", (req, res) => {
