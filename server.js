@@ -1,20 +1,14 @@
-const express = require('express');
-const path = require('path');
-const indexRoutes = require('./routes/index');
-const notesRoutes = require('./routes/notes');
+const express = require("express");
+const apiRoutes = require("./routes/apiRoutes");
+const htmlRoutes = require("./routes/htmlRoutes");
 
 const app = express();
-
 const PORT = process.env.PORT || 3001;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static('public'));
+app.use(express.static("public"));
+app.use("/api", apiRoutes);
+app.use("/", htmlRoutes);
 
-// Set up routes
-app.use('/', indexRoutes);
-app.use('/api/notes', notesRoutes);
-
-app.listen(PORT, () =>
-  console.log(`App listening at http://localhost:${PORT} `)
-);
+app.listen(PORT, () => console.log(`Listening on PORT: ${PORT}`));
