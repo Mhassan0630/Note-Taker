@@ -1,22 +1,27 @@
 [
-    {
-        "title": "Do laundry",
-        "text": "Darks, whites, and colors",
-        "id": "9124"
-    },
-    {
-        "title": "Pick up Grandma from airport",
-        "text": "Terminal 1",
-        "id": "2845"
-    },
-    {
-        "title": "Find a dress for this weekend's wedding",
-        "text": "Check online or local stores",
-        "id": "bf04"
-    },
-    {
-        "title": "Pay bills",
-        "text": "Electric, water, and internet",
-        "id": "d7f3"
-    }
+  {
+    "title": "Do laundry",
+    "text": "Darks, whites, and colors",
+    "id": "9124"
+  },
+  {
+    "title": "Pick up Grandma from airport",
+    "text": "Terminal 1",
+    "id": "2845"
+  },
+  {
+    "title": "Find a dress for this weekend's wedding",
+    "text": "Check online or local stores",
+    "id": "bf04"
+  },
+  {
+    "title": "Pay bills",
+    "text": "Electric, water, and internet",
+    "id": "d7f3"
+  },
+  {
+    "id": "649da6bc-603a-4a65-b1bb-8d8c51b216c1",
+    "title": "grocery list",
+    "text": "fruits\nvegies"
+  }
 ]
