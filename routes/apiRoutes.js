@@ -1,31 +1,54 @@
 const router = require("express").Router();
-const fsUtils = require('../helpers/fsUtils');
-const uuid = require('../helpers/uuid');
+const fs = require("fs");
+const { v4: uuidv4 } = require('uuid');
+
+const notesFilePath = './db/db.json';
+
+// Helper function to read notes from file
+function readNotesFromFile() {
+  const data = fs.readFileSync(notesFilePath, 'utf8');
+  return JSON.parse(data);
+}
+
+// Helper function to write notes to file
+function writeNotesToFile(notes) {
+  fs.writeFileSync(notesFilePath, JSON.stringify(notes, null, 2));
+}
 
 // GET "/api/notes"
 router.get("/notes", (req, res) => {
-  store
-    .getNotes()
-    .then((notes) => {
-      return res.json(notes);
-    })
-    .catch((err) => res.status(500).json(err));
+  const notes = readNotesFromFile();
+  res.json(notes);
 });
 
 // POST "/api/notes"
 router.post("/notes", (req, res) => {
-  store
-    .addNote(req.body)
-    .then((note) => res.json(note))
-    .catch((err) => res.status(500).json(err));
+  const notes = readNotesFromFile();
+  
+  const newNote = {
+    id: uuidv4(),
+    title: req.body.title,
+    text: req.body.text,
+  };
+
+  notes.push(newNote);
+
+  writeNotesToFile(notes);
+
+  res.json(newNote);
 });
 
-// DELETE "/api/notes"
+// DELETE "/api/notes/:id"
 router.delete("/notes/:id", (req, res) => {
-  store
-    .removeNote(req.params.id)
-    .then(() => res.json({ ok: true }))
-    .catch((err) => res.status(500).json(err));
+  const noteId = req.params.id;
+
+  let notes = readNotesFromFile();
+
+  notes = notes.filter((note) => note.id !== noteId);
+
+  writeNotesToFile(notes);
+
+  res.json({ ok: true });
 });
 
 module.exports = router;
